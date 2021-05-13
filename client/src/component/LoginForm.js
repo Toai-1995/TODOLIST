@@ -60,7 +60,7 @@ const mapStateToProps = ({ auth }) => {
 }
 
 const mapActionToProps = {
-    login: login
+    login
 }
 
 
