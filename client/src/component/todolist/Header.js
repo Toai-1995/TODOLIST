@@ -4,21 +4,10 @@ import { connect } from 'react-redux'
 import { addTodo } from '../../action/TodoList'
 
 function Header(props) {
-    const { addTodo } = props
-    // const addTodo = (text) => {
-    //     store.dispatch({
-    //         type: type.ADD_TODO,
-    //         payload: {
-    //             id: new Date().valueOf(),
-    //             text,
-    //             complete: false
-    //         }
-    //     });
-    //     setText('')
-    // }
+    const { addTodo, username } = props
     const onAddTodo = (e) => {
         if (e.key === "Enter" && text) {
-            addTodo(text)
+            addTodo(text, username)
             setText('')
         }
     }
@@ -44,6 +33,13 @@ const mapActionToProps = {
     addTodo
 }
 
+const mapStateToProps = ({ auth }) => {
+    return {
+        username: auth.username
+    }
+}
 
 
-export default connect(null, mapActionToProps)(Header)
+
+
+export default connect(mapStateToProps, mapActionToProps)(Header)

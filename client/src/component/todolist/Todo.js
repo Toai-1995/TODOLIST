@@ -9,7 +9,7 @@ const Todo = (props) => {
                     className="toggle"
                     type="checkbox"
                 />
-                <label>{todo.text}</label>
+                <label>{todo.todolist}</label>
                 <button
                     className="destroy"
                 ></button>

@@ -76,30 +76,21 @@ app.post("/register", (req, res) => {
     })
 });
 
-// app.get("/login", (req, res) => {
-//     console.log(req.session.user)
-//     if (req.session.user) {
-//         res.send({ loggedIn: true, user: req.session.user });
-//         console.log(req.session);
-//     } else {
-//         res.send({ loggedIn: false })
-//         console.log('oke')
-//     }
-// });
 
 app.post("/login", (req, res) => {
-    let { username, password } = req.body;
+    const { username, password } = req.body;
 
     db.query(
         "SELECT * FROM infologin WHERE username = ?", [username],
         (err, result) => {
+            // console.log(result)
             if (err) {
                 res.send(err);
             }
             if (result.length > 0) {
                 bcrypt.compare(password, result[0].password, (error, response) => {
                     if (response) {
-                        console.log(response)
+                        //console.log(response)
                         let token = jwt.sign({
                             username,
 
@@ -120,6 +111,40 @@ app.post("/login", (req, res) => {
             }
         }
     )
+}
+)
+
+app.get("/todolist", (req, res) => {
+    const { username } = req.query
+    // console.log(req.query)
+    db.query(
+        "SELECT * FROM todolist WHERE username = ?", [username],
+        (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            if (result.length > 0) {
+                res.send(result)
+                // console.log(result)
+            }
+        }
+    )
+})
+
+app.post("/todolist", (req, res) => {
+    const { id, username, todolist, complete } = req.body
+    db.query(
+        "INSERT INTO todolist (id, username, todolist, complete) VALUE (?, ?, ?, ?) ", [id, username, todolist, complete],
+        (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            if (result) {
+                res.send(result)
+            }
+        }
+    )
+
 }
 )
 

@@ -13,7 +13,7 @@ export const LoginForm = (props) => {
     const onLogin = (e) => {
         e.preventDefault();
         props.login(user);
-        console.log(props.isLoggedIn)
+        // console.log(props.isLoggedIn)
     }
 
     const [user, setUser] = useState({ username: "", password: "" })

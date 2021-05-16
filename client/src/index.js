@@ -7,16 +7,16 @@ import jwt from "jsonwebtoken";
 import axios from 'axios'
 
 import store from './store/store';
+import * as type from './action/ActionTypes'
 
 
 var token = localStorage.getItem('token');
 if (token) {
   const data = jwt.decode(token);
-  //console.log(data)
   const now = new Date().getTime() / 1000; // convert to timestamp in seconds
   if (data.exp > now) {
     store.dispatch({
-      type: "LOGGIN_SUCCESS", payload: token
+      type: type.LOGGIN_SUCCESS, payload: { token, username: data.username }
     });
     axios.defaults.headers.common.authorization = `Bearer ${token}`;
   }

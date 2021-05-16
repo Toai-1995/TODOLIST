@@ -6,7 +6,7 @@
   "scripts": {
     "start": "json-server --watch db.json --port 3004",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node index.js"
+    "server": "nodemon index.js"
   },
   "author": "Toai_Do",
   "license": "ISC",
@@ -20,5 +20,8 @@
     "json-server": "^0.16.3",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

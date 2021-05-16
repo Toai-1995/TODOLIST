@@ -3,7 +3,8 @@ import * as type from '../../action/ActionTypes'
 const initialState = {
     isLoggedIn: false,
     message: "",
-    token: ""
+    token: "",
+    username: ""
 }
 
 const authReducer = (state = initialState, action) => {
@@ -19,13 +20,14 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: true,
                 message: "Logged in success",
-                token: action.payload
+                token: action.payload.token,
+                username: action.payload.username
             }
         case type.LOGGIN_FAIL:
             return {
                 ...state,
                 isLoggedIn: false,
-                message: "Logged in fail "
+                message: action.payload
             }
         default: return state
     }
