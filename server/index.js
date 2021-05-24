@@ -3,10 +3,6 @@ const mysql = require("mysql");
 const cors = require("cors");
 const jwt = require('jsonwebtoken');
 
-// const bodyParser = require('body-parser')
-// const cookieParser = require('cookie-parser')
-// const session = require('express-session')
-
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -16,24 +12,10 @@ const app = express();
 app.use(express.json());
 app.use(cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT"],
     credentials: true
 }))
 
-// app.use(cookieParser());
-// app.use(bodyParser.urlencoded({ extended: true }));
-
-// app.use(
-//     session({
-//         key: "userId",
-//         secret: "subscribe",
-//         resave: false,
-//         saveUninitialized: false,
-//         cookie: {
-//             expires: 60 * 60 * 24,
-//         },
-//     })
-// );
 
 const db = mysql.createConnection({
     user: "root",
@@ -147,6 +129,26 @@ app.post("/todolist", (req, res) => {
 
 }
 )
+
+app.put("/todolist", (req, res) => {
+    const { id, username, todolist, complete } = req.body
+    db.query(
+        "UPDATE todolist SET username = ?, todolist = ?, complete= ? WHERE id = ? ", [username, todolist, complete, id],
+        (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            if (result) {
+                res.send({ message: "edit success", result })
+            }
+        }
+    )
+
+}
+)
+
+
+
 
 
 app.listen(3001, () => {

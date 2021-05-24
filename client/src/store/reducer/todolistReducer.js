@@ -1,7 +1,11 @@
 import * as type from '../../action/ActionTypes'
 
 const initialState = {
-    items: []
+    items: [],
+    editTodo: {
+        success: false,
+        message: ""
+    }
 }
 
 
@@ -18,7 +22,14 @@ const todolistReducer = (state = initialState, action) => {
                 ...state,
                 items: [...state.items, action.payload]
             }
-
+        case type.EDIT_TODO:
+            return {
+                ...state,
+                editTodo: {
+                    success: true,
+                    message: action.payload.message
+                }
+            }
         default: return state
     }
 
